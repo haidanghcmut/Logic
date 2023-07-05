@@ -70,3 +70,28 @@ end
 def add_digits(str)
   str.each_char.inject(0) {|sum, digit| sum + digit.to_i}
 end
+
+# In this kata, you will write a function that returns the positions and the values of the "peaks" (or local maxima) of a numeric array.
+
+# For example, the array arr = [0, 1, 2, 5, 1, 0] has a peak at position 3 with a value of 5 (since arr[3] equals 5).
+
+# The output will be returned as an object with two properties: pos and peaks. Both of these properties should be arrays. If there is no peak in the given array, then the output should be {pos: [], peaks: []}.
+
+# Example: pickPeaks([3, 2, 3, 6, 4, 1, 2, 3, 2, 1, 2, 3]) should return {pos: [3, 7], peaks: [6, 3]} (or equivalent in other languages)
+
+# All input arrays will be valid integer arrays (although it could still be empty), so you won't need to validate the input.
+
+def pick_peaks(array)
+    pos = []
+    peak = nil
+    (1...array.size).each do |index|
+      if array[index] > array[index-1]
+        peak = index
+      elsif array[index] < array[index-1] && peak
+        pos << peak
+        peak = nil
+      end
+    end
+  
+    { "pos" => pos, "peaks" => pos.map { |p| array[p] } }
+  end
